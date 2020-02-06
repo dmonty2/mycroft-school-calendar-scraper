@@ -6,7 +6,7 @@ import feedparser
 import re
 import datetime
 
-class BrockBlocks(MycroftSkill):
+class BrockBlocksSkill(MycroftSkill):
     def __init__(self):
         """ first constructed for variables, setup actions """
         super().__init__()
@@ -18,7 +18,8 @@ class BrockBlocks(MycroftSkill):
     @intent_handler('WhatAreTodaysBlocks.intent')
     def handle_todays_blocks_intent(self, message):
         self.speak(blocks)
-        myDate = '{dt.month}/{dt.day}/{dt.year}'.format(dt = datetime.datetime.now())
+        #myDate = '{dt.month}/{dt.day}/{dt.year}'.format(dt = datetime.datetime.now())
+        myDate = datetime.datetime.now().strftime("%m/%d/%Y").lstrip("0")
         feed = feedparser.parse('/home/mycroft/rss-new.rss')
         for item in feed.entries:
             if re.search("\("+myDate+"\)", item.title):
@@ -28,3 +29,8 @@ class BrockBlocks(MycroftSkill):
                 else:
                     self.speak( output )
 
+    def stop(self):
+        pass
+
+def create_skill():
+    return BrockBlocksSkill()
