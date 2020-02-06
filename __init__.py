@@ -17,8 +17,6 @@ class BrockBlocksSkill(MycroftSkill):
 
     @intent_handler('WhatAreTodaysBlocks.intent')
     def handle_todays_blocks_intent(self, message):
-        self.speak(blocks)
-        #myDate = '{dt.month}/{dt.day}/{dt.year}'.format(dt = datetime.datetime.now())
         myDate = datetime.datetime.now().strftime("%m/%d/%Y").lstrip("0")
         feed = feedparser.parse('/home/mycroft/rss-new.rss')
         for item in feed.entries:
